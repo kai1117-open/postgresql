@@ -1,0 +1,21 @@
+<h2><%= @user.name %> のプロフィール</h2>
+
+<h3>参加した大会</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>大会名</th>
+      <th>スコア</th>
+      <th>順位</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @participations.each do |participation| %>
+      <tr>
+        <td><%= link_to participation.tournament.name, participation.tournament %></td>
+        <td><%= participation.score %></td>
+        <td><%= participation.tournament.participants.order(score: :desc).pluck(:id).index(participation.id) + 1 %>位</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

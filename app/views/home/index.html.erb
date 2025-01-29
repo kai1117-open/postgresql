@@ -1,0 +1,10 @@
+<h1>MatchPathへようこそ</h1>
+<p>スイスドロー方式の大会を管理するツールです。</p>
+
+<% if user_signed_in? %>
+  <p>ようこそ、<%= current_user.name %> さん！</p>
+  <%= link_to "ダッシュボード", dashboard_path, class: "btn btn-primary" %>
+<% else %>
+  <%= link_to "ログイン", new_user_session_path, class: "btn btn-success" %>
+  <%= link_to "新規登録", new_user_registration_path, class: "btn btn-primary" %>
+<% end %>

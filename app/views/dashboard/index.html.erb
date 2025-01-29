@@ -1,0 +1,21 @@
+<h2>ダッシュボード</h2>
+
+<h3>大会一覧</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>大会名</th>
+      <th>参加者数</th>
+      <th>開始日</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tournaments.each do |tournament| %>
+      <tr>
+        <td><%= link_to tournament.name, tournament %></td>
+        <td><%= tournament.participants.count %></td>
+        <td><%= tournament.date.strftime("%Y-%m-%d") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

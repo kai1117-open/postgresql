@@ -1,0 +1,15 @@
+<h2>ランキング</h2>
+<table class="table">
+  <thead>
+    <tr><th>順位</th><th>参加者</th><th>スコア</th></tr>
+  </thead>
+  <tbody>
+    <% @tournament.participants.order(score: :desc).each_with_index do |participant, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= participant.user.name %></td>
+        <td><%= participant.score %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
