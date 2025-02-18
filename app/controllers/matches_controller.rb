@@ -4,7 +4,7 @@ class MatchesController < ApplicationController
   before_action :set_match, only: [:show, :edit, :update]
 
   def index
-    @matches = @tournament.matches.includes(:player1, :player2)
+    @matches = @tournament.matches.includes(player1: :user, player2: :user)
   end
 
   def show

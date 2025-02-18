@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @participants.each do |participant| %>
+      <% @tournament.participants.each do |participant| %>
         <tr>
           <td><%= participant.user.name %></td>
           <td><%= participant.score %></td>
@@ -28,5 +28,8 @@
     </tbody>
   </table>
 
-  <%= link_to "大会一覧へ戻る", tournaments_path, class: "btn btn-secondary mt-3" %>
+  <div class="mt-4">
+    <%= link_to "試合一覧へ", tournament_matches_path(@tournament), class: "btn btn-info" %>
+    <%= link_to "大会一覧へ戻る", tournaments_path, class: "btn btn-secondary" %>
+  </div>
 </div>
