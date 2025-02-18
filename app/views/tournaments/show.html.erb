@@ -1,15 +1,32 @@
-<h2>ランキング</h2>
-<table class="table">
-  <thead>
-    <tr><th>順位</th><th>参加者</th><th>スコア</th></tr>
-  </thead>
-  <tbody>
-    <% @tournament.participants.order(score: :desc).each_with_index do |participant, index| %>
+<div class="container mt-4">
+  <h1><%= @tournament.name %></h1>
+  <p>開催日: <%= @tournament.date.strftime("%Y-%m-%d") if @tournament.date %></p>
+  <p>最大参加者数: <%= @tournament.max_participants %></p>
+  <p>ステータス: <%= @tournament.status %></p>
+
+  <% if @tournament.participants.exists?(user: current_user) %>
+    <p class="text-success">✅ 参加済み</p>
+  <% else %>
+    <%= button_to "大会に参加する", join_tournament_path(@tournament), method: :post, class: "btn btn-primary" %>
+  <% end %>
+
+  <h2 class="mt-4">参加者一覧</h2>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= index + 1 %></td>
-        <td><%= participant.user.name %></td>
-        <td><%= participant.score %></td>
+        <th>ユーザー名</th>
+        <th>スコア</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @participants.each do |participant| %>
+        <tr>
+          <td><%= participant.user.name %></td>
+          <td><%= participant.score %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "大会一覧へ戻る", tournaments_path, class: "btn btn-secondary mt-3" %>
+</div>

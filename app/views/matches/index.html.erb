@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <h1 class="mb-4"><%= @tournament.name %> - 試合一覧</h1>
+
+  <% if @matches.any? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ラウンド</th>
+          <th>プレイヤー1</th>
+          <th>プレイヤー2</th>
+          <th>結果</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @matches.each do |match| %>
+          <tr>
+            <td><%= match.round %></td>
+            <td><%= match.player1.user.name %></td>
+            <td><%= match.player2.user.name %></td>
+            <td>
+              <% if match.result %>
+                <%= match.result == "draw" ? "引き分け" : "#{match.send(match.result).user.name} 勝利" %>
+              <% else %>
+                未登録
+              <% end %>
+            </td>
+            <td>
+              <%= link_to "編集", edit_tournament_match_path(@tournament, match), class: "btn btn-primary btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>試合がまだ作成されていません。</p>
+    <%= button_to "試合を作成する", tournament_matches_path(@tournament), method: :post, class: "btn btn-success" %>
+  <% end %>
+
+  <%= link_to "大会詳細へ戻る", tournament_path(@tournament), class: "btn btn-secondary mt-3" %>
+</div>

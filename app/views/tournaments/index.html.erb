@@ -1,0 +1,32 @@
+<div class="container mt-4">
+  <h1 class="mb-4">大会一覧</h1>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>大会名</th>
+        <th>開催日</th>
+        <th>最大参加者数</th>
+        <th>ステータス</th>
+        <th>詳細</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tournaments.each do |tournament| %>
+        <tr>
+          <td><%= tournament.id %></td>
+          <td><%= tournament.name %></td>
+          <td><%= tournament.date.strftime("%Y-%m-%d") if tournament.date %></td>
+          <td><%= tournament.max_participants %></td>
+          <td><%= tournament.status %></td>
+          <td>
+            <%= link_to "詳細", tournament_path(tournament), class: "btn btn-primary btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "新規大会作成", new_tournament_path, class: "btn btn-success mt-3" %>
+</div>

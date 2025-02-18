@@ -1,0 +1,30 @@
+<div class="container mt-4">
+  <h1 class="mb-4">新規大会作成</h1>
+
+  <%= form_with model: @tournament, local: true, class: "needs-validation" do |f| %>
+    <div class="mb-3">
+      <%= f.label :name, "大会名", class: "form-label" %>
+      <%= f.text_field :name, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :date, "開催日", class: "form-label" %>
+      <%= f.date_field :date, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :max_participants, "最大参加者数", class: "form-label" %>
+      <%= f.number_field :max_participants, class: "form-control", min: 2, required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :status, "大会ステータス", class: "form-label" %>
+      <%= f.select :status, [["募集中", "募集中"], ["進行中", "進行中"], ["終了", "終了"]], {}, class: "form-select", required: true %>
+    </div>
+
+    <div class="d-flex gap-2">
+      <%= f.submit "大会を作成", class: "btn btn-success" %>
+      <%= link_to "キャンセル", tournaments_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

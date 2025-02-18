@@ -7,6 +7,7 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find(params[:id])
+    @participants = @tournament.participants.includes(:user)
   end
 
   def new
@@ -20,6 +21,27 @@ class TournamentsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def join
+    @tournament = Tournament.find(params[:id])
+    
+    # 既に参加済みかチェック
+    if @tournament.participants.exists?(user: current_user)
+      redirect_to @tournament, alert: "既に参加しています。"
+      return
+    end
+
+    # 参加者が定員オーバーでないかチェック
+    if @tournament.participants.count >= @tournament.max_participants
+      redirect_to @tournament, alert: "参加人数が上限に達しました。"
+      return
+    end
+
+    # 参加登録
+    @tournament.participants.create(user: current_user, score: 0)
+
+    redirect_to @tournament, notice: "大会に参加しました！"
   end
 
   private

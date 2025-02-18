@@ -1,9 +1,16 @@
-<h2>試合結果を登録</h2>
+<div class="container mt-4">
+  <h1 class="mb-4">試合結果登録</h1>
 
-<%= form_with model: @match, local: true do |f| %>
-  <div class="mb-3">
-    <%= f.label :result, "勝者を選択", class: "form-label" %>
-    <%= f.select :result, [["Player 1", "player1"], ["Player 2", "player2"], ["引き分け", "draw"]], {}, class: "form-select" %>
-  </div>
-  <%= f.submit "結果を登録", class: "btn btn-primary" %>
-<% end %>
+  <p>プレイヤー1: <%= @match.player1.user.name %></p>
+  <p>プレイヤー2: <%= @match.player2.user.name %></p>
+
+  <%= form_with model: @match, url: tournament_match_path(@tournament, @match), method: :patch, local: true do |f| %>
+    <div class="mb-3">
+      <%= f.label :result, "試合結果を選択", class: "form-label" %>
+      <%= f.select :result, [["プレイヤー1勝利", "player1"], ["プレイヤー2勝利", "player2"], ["引き分け", "draw"]], {}, class: "form-select" %>
+    </div>
+
+    <%= f.submit "結果を登録", class: "btn btn-success" %>
+    <%= link_to "キャンセル", tournament_matches_path(@tournament), class: "btn btn-secondary" %>
+  <% end %>
+</div>
