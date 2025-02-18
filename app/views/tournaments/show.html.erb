@@ -2,6 +2,7 @@
   <h1><%= @tournament.name %></h1>
   <p>開催日: <%= @tournament.date.strftime("%Y-%m-%d") if @tournament.date %></p>
   <p>最大参加者数: <%= @tournament.max_participants %></p>
+  <p>現在の参加人数: <%= @tournament.participants.count %> / <%= @tournament.max_participants %></p>
   <p>ステータス: <%= @tournament.status %></p>
 
   <% if @tournament.participants.exists?(user: current_user) %>

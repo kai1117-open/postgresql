@@ -57,8 +57,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_072008) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "matches", "player1s"
-  add_foreign_key "matches", "player2s"
+  add_foreign_key "matches", "participants", column: "player1_id"
+  add_foreign_key "matches", "participants", column: "player2_id"
   add_foreign_key "matches", "tournaments"
   add_foreign_key "participants", "tournaments"
   add_foreign_key "participants", "users"
