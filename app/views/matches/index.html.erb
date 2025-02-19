@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h1 class="mb-4"><%= @tournament.name %> - 試合一覧</h1>
+  <h1 class="mb-4"><%= @tournament.name %> - <%= @tournament.current_round %>回戦</h1>
 
   <% if @matches.any? %>
     <table class="table table-striped">
@@ -33,9 +33,11 @@
       </tbody>
     </table>
   <% else %>
-    <p>試合がまだ作成されていません。</p>
-    <%= button_to "試合を作成する", tournament_matches_path(@tournament), method: :post, class: "btn btn-success" %>
+    <p>このラウンドの試合がまだ作成されていません。</p>
+    <%= button_to "#{@tournament.current_round}回戦の試合を作成", tournament_matches_path(@tournament), method: :post, class: "btn btn-success" %>
   <% end %>
 
+
+  <%= button_to "次のラウンドへ", next_round_tournament_path(@tournament), method: :post, class: "btn btn-warning mt-3" %>
   <%= link_to "大会詳細へ戻る", tournament_path(@tournament), class: "btn btn-secondary mt-3" %>
 </div>

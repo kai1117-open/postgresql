@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   
   resources :tournaments do
     post "join", on: :member
+    post "next_round", on: :member  # ✅ 「次のラウンドへ」ボタン用
     resources :matches, only: [:index, :show, :create, :edit, :update]
   end
 
