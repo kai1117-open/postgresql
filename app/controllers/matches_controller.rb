@@ -4,22 +4,22 @@ class MatchesController < ApplicationController
   before_action :set_match, only: [:show, :edit, :update]
 
   def index
-    @matches = @tournament.matches.includes(player1: :user, player2: :user)
+    @matches = @tournament.matches.where(round: @tournament.current_round).includes(player1: :user, player2: :user)
   end
 
   def show
   end
 
   def create
-    participants = @tournament.participants.shuffle
+    participants = @tournament.participants.order(score: :desc) # スコア順で並び替え
 
-    # すでに試合が組まれている場合はエラーを返す
-    if @tournament.matches.exists?
-      redirect_to tournament_matches_path(@tournament), alert: "既に試合が作成されています。"
+    # すでにそのラウンドの試合が作成されている場合はエラー
+    if @tournament.matches.where(round: @tournament.current_round).exists?
+      redirect_to tournament_matches_path(@tournament), alert: "このラウンドの試合は既に作成されています。"
       return
     end
 
-    # スイスドロー方式で組み合わせを作成
+    # スイスドロー方式で組み合わせ作成
     matches = []
     (0...participants.length).step(2) do |i|
       break if i + 1 >= participants.length
@@ -27,11 +27,11 @@ class MatchesController < ApplicationController
         tournament: @tournament,
         player1: participants[i],
         player2: participants[i + 1],
-        round: 1
+        round: @tournament.current_round
       )
     end
 
-    redirect_to tournament_matches_path(@tournament), notice: "試合が作成されました。"
+    redirect_to tournament_matches_path(@tournament), notice: "#{@tournament.current_round}回戦の試合を作成しました！"
   end
 
   def edit
