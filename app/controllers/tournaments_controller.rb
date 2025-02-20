@@ -7,9 +7,10 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find(params[:id])
-    @participants = @tournament.participants.includes(:user)
+    @participants = @tournament.participants.includes(:user).order(score: :desc)
     @matches = @tournament.matches.where(round: @tournament.current_round)
   end
+  
 
   def next_round
     @tournament = Tournament.find(params[:id])

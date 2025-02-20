@@ -20,13 +20,14 @@
       </tr>
     </thead>
     <tbody>
-      <% @tournament.participants.each do |participant| %>
-        <tr>
-          <td><%= participant.user.name %></td>
-          <td><%= participant.score %></td>
-        </tr>
-      <% end %>
-    </tbody>
+    <% @participants.each do |participant| %>
+      <tr>
+        <td><%= participant.user.name %></td>
+        <td><%= participant.score %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  
   </table>
 
   <div class="mt-4">
