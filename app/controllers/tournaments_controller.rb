@@ -11,6 +11,12 @@ class TournamentsController < ApplicationController
     @matches = @tournament.matches.where(round: @tournament.current_round)
   end
   
+  def previous_round
+    @tournament = Tournament.find(params[:id])
+    @tournament.update(current_round: @tournament.current_round - 1)
+  
+    redirect_to tournament_matches_path(@tournament), notice: "前のラウンドへ戻りました！"
+  end
 
   def next_round
     @tournament = Tournament.find(params[:id])
