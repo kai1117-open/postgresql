@@ -26,7 +26,9 @@
               <% end %>
             </td>
             <td>
+
               <%= link_to "編集", edit_tournament_match_path(@tournament, match), class: "btn btn-primary btn-sm" %>
+
             </td>
           </tr>
         <% end %>
@@ -37,7 +39,10 @@
     <%= button_to "#{@tournament.current_round}回戦の試合を作成", tournament_matches_path(@tournament), method: :post, class: "btn btn-success" %>
   <% end %>
 
+<% if @tournament.current_round > 1 %>
   <%= button_to "前のラウンドへ", previous_round_tournament_path(@tournament), method: :post, class: "btn btn-warning mt-3" %>
+<% end %>
   <%= button_to "次のラウンドへ", next_round_tournament_path(@tournament), method: :post, class: "btn btn-warning mt-3" %>
+
   <%= link_to "大会詳細へ戻る", tournament_path(@tournament), class: "btn btn-secondary mt-3" %>
 </div>
